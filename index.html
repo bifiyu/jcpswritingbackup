@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI作文引導單 - 教師設定</title>
+    
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* General Body and Container Styles (Assumed from style.css) */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f4f7f9; color: #333; line-height: 1.6; margin: 0; padding: 20px;
+        }
+        .container {
+            max-width: 1000px; margin: 0 auto; background: #fff; padding: 25px 40px;
+            border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        h1 { font-size: 2em; text-align: center; margin-bottom: 20px; color: #0056b3; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: 500; }
+        .form-group input[type="text"], .form-group input[type="password"], .form-group select {
+            width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;
+        }
+        .button-primary {
+            display: block; margin: 30px auto 0 auto; padding: 12px 25px; font-size: 1.05em;
+            background-color: #007bff; color: white; border: none; border-radius: 8px; cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .button-primary:hover { background-color: #0056b3; }
+
+        /* --- STYLES FROM YOUR PROVIDED CODE --- */
+        fieldset {
+            border: 3px solid #4a90e2;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        legend {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #4a90e2;
+            padding: 0 15px;
+        }
+        .option-group {
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e0e0e0;
+        }
+        .group-vocabulary { background-color: #e7f3fe; }
+        .group-rhetoric { background-color: #e8f5e9; }
+        .group-sentence-patterns { background-color: #fffbe6; }
+        .option-group h3 { margin-top: 0; margin-bottom: 15px; }
+        
+        /* 修改 connectives 樣式以適應新結構 */
+        .compound-sentence-option { 
+            margin-top: 15px; 
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .compound-sentence-option:last-child {
+            border-bottom: none;
+        }
+        .compound-sentence-option label {
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 0;
+            cursor: pointer;
+            color: #2c3e50;
+        }
+        .connectives-list { 
+            margin-top: 10px; 
+            padding-left: 20px; 
+            /* 預設隱藏關聯詞列表 */
+            display: none; 
+        }
+        .connectives-list label { 
+            font-weight: normal; 
+            margin-right: 15px; 
+            margin-top: 5px; 
+        }
+
+        /* ====== START: CODE ADDED FOR LAYOUT CHANGE ====== */
+        .form-row {
+            display: flex;           /* Enables flexbox layout */
+            gap: 20px;               /* Creates space between the two form groups */
+            align-items: flex-start; /* Aligns items to the top */
+        }
+
+        .form-row .form-group {
+            max-width: 49%;               
+            flex: 0 0 49%;           
+        }
+        /* ====== END: CODE ADDED FOR LAYOUT CHANGE ====== */
+
+    </style>
+    </head>
+<body>
+    <div class="container">
+        <h1>AI作文引導單 - 教師設定 ✍️</h1>
+        <p>請為您的學生設定作文引導單，完成後點擊生成按鈕就好囉！</p>
+        
+        <form id="configForm">
+            <fieldset>
+                <legend>作文基本設定</legend>
+                
+                <div class="form-group">
+                    <label for="title">作文題目</label>
+                    <input type="text" id="title" required placeholder="例如：我最難忘的一次旅行">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="level">學生年級</label>
+                        <select id="level">
+                            <option value="三年級">三年級</option>
+                            <option value="四年級">四年級</option>
+                            <option value="五年級">五年級</option>
+                            <option value="六年級">六年級</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="wordCount">字數要求</label>
+                        <select id="wordCount">
+                            <option value="150字">150字</option>
+                            <option value="300字">300字</option>
+                            <option value="400字">400字</option>
+                            <option value="500字">500字</option>
+                            <option value="600字">600字</option>                         
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="style">作文文體</label>
+                        <select id="style">
+                            <option value="記敘文本(記物)">記敘文本(記物)</option>
+                            <option value="記敘文本(記人)">記敘文本(記人)</option>
+                            <option value="記敘文本(記事)">記敘文本(記事)</option>
+                            <option value="記敘文本(記景)">記敘文本(記景)</option>
+                            <option value="應用文本(書信)">應用文本(書信)</option>
+                            <option value="說明文本">說明文本</option>
+                            <option value="議論文本">議論文本</option>
+                            <option value="抒情文本">抒情文本</option>
+                            <option value="詩歌">詩歌</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="structure">作文結構</label>
+                        <select id="structure">
+                            <option value="起承轉合式">起承轉合式</option>
+                            <option value="時間順序式(順敘法)">時間順序式(順敘法)</option>
+                            <option value="時間順序式(倒敘法)">時間順序式(倒敘法)</option>
+                            <option value="總分總式">總分總式</option>
+                        </select>
+                    </div>
+                </div>
+                </fieldset>
+
+            <fieldset>
+                <legend>作文進階指導選項 (可複選)</legend>
+                
+                <div class="form-group-checkbox option-group group-vocabulary">
+                    <h3>建議詞彙</h3>
+                    <label><input type="checkbox" name="phrases_vocab" value="語詞"> 語詞</label>
+                    <label><input type="checkbox" name="phrases_idioms" value="成語"> 成語</label>
+                    <label><input type="checkbox" name="phrases_quotes" value="名言佳句"> 名言佳句</label>
+                    <label><input type="checkbox" name="phrases_personality" value="性格卡"> 性格卡</label>
+                    <label><input type="checkbox" name="phrases_emotion" value="情緒卡"> 情緒卡</label>
+                </div>
+
+                <div class="form-group-checkbox option-group group-rhetoric">
+                    <h3>建議修辭</h3>
+                    <label><input type="checkbox" name="rhetoric" value="譬喻"> 譬喻</label>
+                    <label><input type="checkbox" name="rhetoric" value="擬人"> 擬人</label>
+                    <label><input type="checkbox" name="rhetoric" value="誇飾"> 誇飾</label>
+                    <label><input type="checkbox" name="rhetoric" value="類疊"> 類疊</label>
+                    <label><input type="checkbox" name="rhetoric" value="排比"> 排比</label>
+                    <label><input type="checkbox" name="rhetoric" value="雙關"> 雙關</label>
+                    <label><input type="checkbox" name="rhetoric" value="映襯"> 映襯</label>
+                    <label><input type="checkbox" name="rhetoric" value="摹寫"> 摹寫</label>
+                </div>
+                
+                <div class="option-group group-sentence-patterns">
+                    <h3>建議句型</h3>
+                    <div class="compound-sentence-option">
+                        <label>
+                            <input type="checkbox" class="sentence-pattern-toggle" data-target="binglie-list"> 
+                            並列複句
+                        </label>
+                        <div id="binglie-list" class="connectives-list">
+                            <label><input type="checkbox" name="conjunctions" value="也"> 也</label>
+                            <label><input type="checkbox" name="conjunctions" value="又"> 又</label>
+                            <label><input type="checkbox" name="conjunctions" value="既又"> 既……又……</label>
+                            <label><input type="checkbox" name="conjunctions" value="一方面另一方面"> 一方面……另一方面……</label>
+                        </div>
+                    </div>
+                    <div class="compound-sentence-option">
+                        <label>
+                            <input type="checkbox" class="sentence-pattern-toggle" data-target="zhuanzhe-list"> 
+                            轉折複句
+                        </label>
+                        <div id="zhuanzhe-list" class="connectives-list">
+                            <label><input type="checkbox" name="conjunctions" value="雖然但是"> 雖然……但是……</label>
+                            <label><input type="checkbox" name="conjunctions" value="雖然卻"> 雖然……卻……</label>
+                            <label><input type="checkbox" name="conjunctions" value="不過"> 不過</label>
+                            <label><input type="checkbox" name="conjunctions" value="然而"> 然而</label>
+                            <label><input type="checkbox" name="conjunctions" value="可是"> 可是</label>
+                        </div>
+                    </div>
+                    <div class="compound-sentence-option">
+                        <label>
+                            <input type="checkbox" class="sentence-pattern-toggle" data-target="yinguo-list"> 
+                            因果複句
+                        </label>
+                        <div id="yinguo-list" class="connectives-list">
+                            <label><input type="checkbox" name="conjunctions" value="因此"> 因此</label>
+                            <label><input type="checkbox" name="conjunctions" value="因為所以"> 因為……所以……</label>
+                            <label><input type="checkbox" name="conjunctions" value="既然就"> 既然……就……</label>
+                            <label><input type="checkbox" name="conjunctions" value="既然那麼"> 既然……那麼……</label>
+                        </div>
+                    </div>
+                    <div class="compound-sentence-option">
+                        <label>
+                            <input type="checkbox" class="sentence-pattern-toggle" data-target="dijin-list"> 
+                            遞進複句
+                        </label>
+                        <div id="dijin-list" class="connectives-list">
+                            <label><input type="checkbox" name="conjunctions" value="更"> 更</label>
+                            <label><input type="checkbox" name="conjunctions" value="並且"> 並且</label>
+                            <label><input type="checkbox" name="conjunctions" value="不但而且"> 不但……而且……</label>
+                            <label><input type="checkbox" name="conjunctions" value="不僅還"> 不僅……還……</label>
+                        </div>
+                    </div>
+                    <div class="compound-sentence-option">
+                        <label>
+                            <input type="checkbox" class="sentence-pattern-toggle" data-target="tiaojian-list"> 
+                            條件複句
+                        </label>
+                        <div id="tiaojian-list" class="connectives-list">
+                            <label><input type="checkbox" name="conjunctions" value="只要就"> 只要……就……</label>
+                            <label><input type="checkbox" name="conjunctions" value="只有才"> 只有……才……</label>
+                            <label><input type="checkbox" name="conjunctions" value="除非才"> 除非……才……</label>
+                            <label><input type="checkbox" name="conjunctions" value="無論都"> 無論……都……</label>
+                            <label><input type="checkbox" name="conjunctions" value="任憑都"> 任憑……都……</label>
+                            <label><input type="checkbox" name="conjunctions" value="不管也"> 不管……也……</label>
+                            <label><input type="checkbox" name="conjunctions" value="不論總"> 不論……總……</label>
+                        </div>
+                    </div>
+                    <div class="compound-sentence-option">
+                        <label>
+                            <input type="checkbox" class="sentence-pattern-toggle" data-target="mudi-list"> 
+                            目的複句
+                        </label>
+                        <div id="mudi-list" class="connectives-list">
+                            <label><input type="checkbox" name="conjunctions" value="為了"> 為了</label>
+                            <label><input type="checkbox" name="conjunctions" value="以便"> 以便</label>
+                            <label><input type="checkbox" name="conjunctions" value="免得"> 免得</label>
+                            <label><input type="checkbox" name="conjunctions" value="以免"> 以免</label>
+                            <label><input type="checkbox" name="conjunctions" value="為了起見"> 為了……起見……</label>
+                        </div>
+                    </div>
+                    <div class="compound-sentence-option">
+                        <label>
+                            <input type="checkbox" class="sentence-pattern-toggle" data-target="chengjie-list"> 
+                            承接複句
+                        </label>
+                        <div id="chengjie-list" class="connectives-list">
+                            <label><input type="checkbox" name="conjunctions" value="於是"> 於是</label>
+                            <label><input type="checkbox" name="conjunctions" value="然後"> 然後</label>
+                            <label><input type="checkbox" name="conjunctions" value="接著"> 接著</label>
+                            <label><input type="checkbox" name="conjunctions" value="後來"> 後來</label>
+                            <label><input type="checkbox" name="conjunctions" value="便"> 便</label>
+                            <label><input type="checkbox" name="conjunctions" value="一就"> 一……就……</label>
+                        </div>
+                    </div>
+                    <div class="compound-sentence-option">
+                        <label>
+                            <input type="checkbox" class="sentence-pattern-toggle" data-target="jiashen-list"> 
+                            假設複句
+                        </label>
+                        <div id="jiashen-list" class="connectives-list">
+                            <label><input type="checkbox" name="conjunctions" value="假如"> 假如</label>
+                            <label><input type="checkbox" name="conjunctions" value="假使"> 假使</label>
+                            <label><input type="checkbox" name="conjunctions" value="假若"> 假若</label>
+                            <label><input type="checkbox" name="conjunctions" value="要是"> 要是</label>
+                            <label><input type="checkbox" name="conjunctions" value="如果就"> 如果……就……</label>
+                            <label><input type="checkbox" name="conjunctions" value="倘若那麼"> 倘若……那麼……</label>
+                            <label><input type="checkbox" name="conjunctions" value="就是也"> 就是……也……</label>
+                        </div>
+                    </div>
+                    <div class="compound-sentence-option">
+                        <label>
+                            <input type="checkbox" class="sentence-pattern-toggle" data-target="xuanze-list"> 
+                            選擇複句
+                        </label>
+                        <div id="xuanze-list" class="connectives-list">
+                            <label><input type="checkbox" name="conjunctions" value="要麼要麼"> 要麼……要麼……</label>
+                            <label><input type="checkbox" name="conjunctions" value="或者或者"> 或者……或者……</label>
+                            <label><input type="checkbox" name="conjunctions" value="是還是"> 是……還是……</label>
+                            <label><input type="checkbox" name="conjunctions" value="不是就是"> 不是……就是……</label>
+                            <label><input type="checkbox" name="conjunctions" value="與其不如"> 與其……不如……</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group-checkbox option-group" style="background-color: #fce7f6;">
+                    <h3>生成範文</h3>
+                    <label>
+                        <input type="checkbox" name="generate_example_essay" value="true"> 
+                        提供一篇完整文章作為靈感輔助
+                    </label>
+                </div>
+
+                <button type="submit" class="button-primary">生成學生作文引導單</button>
+            </fieldset>
+        </form>
+    </div>
+
+<script> 
+    // 新增：處理複句選項的顯示/隱藏邏輯
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const toggles = document.querySelectorAll('.sentence-pattern-toggle');
+        toggles.forEach(toggle => {
+            toggle.addEventListener('change', function() {
+                // 取得 data-target 屬性值，即要控制的關聯詞列表的 ID
+                const targetId = this.getAttribute('data-target');
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    // 根據複選框的狀態來切換列表的顯示
+                    if (this.checked) {
+                        targetElement.style.display = 'block';
+                    } else {
+                        targetElement.style.display = 'none';
+                        // 可選：當隱藏時，取消勾選內部的所有關聯詞選項
+                        const innerCheckboxes = targetElement.querySelectorAll('input[type="checkbox"]');
+                        innerCheckboxes.forEach(cb => cb.checked = false);
+                    }
+                }
+            });
+        });
+    });
+
+
+    document.getElementById('configForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+         // 1. 設定 API Key (硬編碼部分不變)
+        const apiKey = "AIzaSyCN60U04obCUR5hNTWneKs_hjx2m9wYmUo";
+        
+        // 輔助函式：收集特定 name 屬性所有被勾選的值
+        const getCheckedValues = (name) => {
+            return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(cb => cb.value);
+        };
+
+        const params = new URLSearchParams();
+        const titleValue = document.getElementById('title').value.trim();
+
+        if (!titleValue) {
+            alert('請務必填寫作文題目！');
+            document.getElementById('title').focus();
+            return;
+        }
+
+        // 收集所有基本參數
+        params.set('title', titleValue);
+        params.set('level', document.getElementById('level').value);
+        params.set('wordCount', document.getElementById('wordCount').value);
+        params.set('style', document.getElementById('style').value);
+        params.set('structure', document.getElementById('structure').value);
+        
+        // 收集所有進階指導參數 (conjunctions 現在只會收集被勾選且顯示的)
+        const dynamicCategories = [
+            'phrases_vocab', 'phrases_idioms', 'phrases_quotes', 
+            'phrases_personality', 'phrases_emotion', 'conjunctions', 'rhetoric'
+        ];
+        
+        dynamicCategories.forEach(name => {
+            const values = getCheckedValues(name);
+            if (values.length > 0) {
+                params.set(name, values.join(','));
+            }
+        });
+
+        const generateExample = getCheckedValues('generate_example_essay');
+        if (generateExample.includes('true')) {
+            params.set('generate_example_essay', 'true');
+        }
+
+        // *** 關鍵改變：將 API Key 編碼後放入 URL Hash (#) ***
+        const urlParams = params.toString();
+        // 使用 encodeURIComponent 確保 Key 中的特殊符號能正確傳輸
+        const hashKey = `#apikey=${encodeURIComponent(apiKey)}`;
+
+        // 將用戶導向學生頁面，Key 放在 Hash 區
+        window.location.href = `student_tool.html?${urlParams}${hashKey}`;
+    });
+</script>
+</body>
+</html>
